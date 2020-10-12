@@ -2,10 +2,12 @@
 type List = Array<{
   id: string;
   name: string;
-  files: Array<{
-    id: string;
-    name: string;
-  }>;
+  files: Files;
+}>;
+
+type Files = Array<{
+  id: string;
+  name: string;
 }>;
 
 export default function move(list: List, source: string, destination: string): List {
@@ -13,8 +15,8 @@ export default function move(list: List, source: string, destination: string): L
   // get reference of list, so we won't corrupt original array.
   const destinationFiles = [...list];
   // get source file which will be moved.
-  let fileToBeMoved: Array<{ id: string; name: string }> = [];
-  sourceFiles.forEach((file: { files: Array<{ id: string; name: string }> }) => {
+  let fileToBeMoved: Files = [];
+  sourceFiles.forEach((file: { files: Files }) => {
     if (
       fileToBeMoved.length === 0 &&
       file.files.findIndex((item: { id: string }) => item.id === source) !== -1
